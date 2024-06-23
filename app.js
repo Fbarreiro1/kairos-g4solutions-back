@@ -43,6 +43,8 @@ app.get('/usuarios', (req, res) => {
   });
 });
 
+connection.end();
+
 // Ruta para agregar datos a USUARIOS
 app.post('/usuarios', (req, res) => {
   const { USERNAME,TIPO,TELEFONO,PASSWORD,NOMBRE,FK_CLINICAS,EMAIL,DNI,CAMPO,FK_PACIENTE } = req.body;
