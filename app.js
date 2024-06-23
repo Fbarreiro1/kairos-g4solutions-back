@@ -436,8 +436,6 @@
       if (error) throw error;
       res.json(results);
     });
-
-    connection.end();
   });
 
 
