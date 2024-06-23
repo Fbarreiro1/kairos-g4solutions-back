@@ -65,7 +65,7 @@
 
     connection.query('DELETE FROM usuarios WHERE USERNAME = ?', userId, (error, results) => {
       if (error) {
-        res.status(500).json({ error: 'Error al insertar los datos' });
+        res.status(500).json({ error: 'Error al insertar los datos' + error.message + error});
       } else {
         res.status(200).json({ message: 'Datos insertados correctamente' });
       }
@@ -78,8 +78,12 @@
   // Ruta para obtener datos de CLINICAS
   app.get('/clinicas', (req, res) => {
     connection.query('SELECT * FROM clinicas', (error, results) => {
-      if (error) throw error;
-      res.json(results);
+      if (error){
+        res.status(500).json({ error: 'Error al traer los datos' + error.message + error});
+      } else {
+        res.json(results);
+        console.log(results);
+      }
     });
   });
 
@@ -115,8 +119,12 @@
   // Ruta para obtener datos de PACIENTES
   app.get('/pacientes', (req, res) => {
     connection.query('SELECT * FROM pacientes', (error, results) => {
-      if (error) throw error;
-      res.json(results);
+      if (error){
+        res.status(500).json({ error: 'Error al traer los datos' + error.message + error});
+      } else {
+        res.json(results);
+        console.log(results);
+      }
     });
   });
 
@@ -157,8 +165,12 @@
       'LEFT JOIN clinicas CL ON CL.ID = T.FK_CLINICAS '+
       'LEFT JOIN usuarios PR ON PR.USERNAME = T.FK_PROFESIONAL '+
       'LEFT JOIN campos CA ON CA.ID = T.CAMPO ', (error, results) => {
-      if (error) throw error;
-      res.json(results);
+        if (error){
+          res.status(500).json({ error: 'Error al traer los datos' + error.message + error});
+        } else {
+          res.json(results);
+          console.log(results);
+        }
     });
   });
 
@@ -193,8 +205,12 @@
   // Ruta para obtener datos de campos
   app.get('/campos', (req, res) => {
     connection.query('SELECT * FROM campos', (error, results) => {
-      if (error) throw error;
-      res.json(results);
+      if (error){
+        res.status(500).json({ error: 'Error al traer los datos' + error.message + error});
+      } else {
+        res.json(results);
+        console.log(results);
+      }
     });
   });
 
@@ -230,8 +246,12 @@
   // Ruta para obtener datos de TIPOS
   app.get('/tipos', (req, res) => {
     connection.query('SELECT * FROM tipos', (error, results) => {
-      if (error) throw error;
-      res.json(results);
+      if (error){
+        res.status(500).json({ error: 'Error al traer los datos' + error.message + error});
+      } else {
+        res.json(results);
+        console.log(results);
+      }
     });
   });
 
@@ -276,8 +296,12 @@
       'JOIN pacientes P ON P.DNI = A.FK_PACIENTES '+
       'JOIN usuarios U ON U.USERNAME = A.FK_PROFESIONAL '+
       'WHERE A.FK_PROFESIONAL = ?', profId, (error, results) => {
-      if (error) throw error;
-      res.json(results);
+        if (error){
+          res.status(500).json({ error: 'Error al traer los datos' + error.message + error});
+        } else {
+          res.json(results);
+          console.log(results);
+        }
     });
   });
 
