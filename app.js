@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, PORT } = require('./config.js');
 
 const app = express();
 
@@ -15,10 +16,10 @@ app.use(bodyParser.json());
 
 // MySQL Connection
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'tp_g4',
-  password: '123456789',
-  database: 'tp_g4_db'
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME
 });
 
 connection.connect((err) => {
@@ -410,7 +411,7 @@ app.get('/turnos-pac/:id', (req, res) => {
 
 
 
-const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
