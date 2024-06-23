@@ -28,7 +28,7 @@
       console.error('Error al conectarse a la base de datos: ' + err.message);
       return;
     }
-    console.log('conexion exitosa a base de datos tp_g4_db');
+    console.log('conexion exitosa a base de datos: ' + DB_NAME);
   });
 
 
