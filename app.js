@@ -38,7 +38,7 @@
   app.get('/usuarios', (req, res) => {
     connection.query('SELECT U.*, C.NOMBRE AS N_CAMPO FROM usuarios U LEFT JOIN campos C ON C.ID = U.CAMPO', (error, results) => {
       if (error){
-        res.status(500).json({ error: 'Error al traer los datos' + error.message });
+        res.status(500).json({ error: 'Error al traer los datos' + error.message + error});
       } else {
         res.json(results);
         console.log(results);
