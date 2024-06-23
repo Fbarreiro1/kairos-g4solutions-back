@@ -37,7 +37,7 @@ connection.connect((err) => {
 // Ruta para obtener datos de USUARIOS
 app.get('/usuarios', (req, res) => {
   connection.query('SELECT U.*, C.NOMBRE AS N_CAMPO FROM USUARIOS U LEFT JOIN CAMPOS C ON C.ID = U.CAMPO', (error, results) => {
-    if (error) throw error;
+    if (error) throw error.message;
     res.json(results);
   });
 });
