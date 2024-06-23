@@ -49,7 +49,7 @@
   // Ruta para agregar datos a USUARIOS
   app.post('/usuarios', (req, res) => {
     const { USERNAME,TIPO,TELEFONO,PASSWORD,NOMBRE,FK_CLINICAS,EMAIL,DNI,CAMPO,FK_PACIENTE } = req.body;
-    connection.query('INSERT INTO USUARIOS (USERNAME,TIPO,TELEFONO,PASSWORD,NOMBRE,FK_CLINICAS,EMAIL,DNI,CAMPO,FK_PACIENTE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [USERNAME,TIPO,TELEFONO,PASSWORD,NOMBRE,FK_CLINICAS,EMAIL,DNI,CAMPO,FK_PACIENTE], (error, results) => {
+    connection.query('INSERT INTO usuarios (USERNAME,TIPO,TELEFONO,PASSWORD,NOMBRE,FK_CLINICAS,EMAIL,DNI,CAMPO,FK_PACIENTE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [USERNAME,TIPO,TELEFONO,PASSWORD,NOMBRE,FK_CLINICAS,EMAIL,DNI,CAMPO,FK_PACIENTE], (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -63,7 +63,7 @@
   app.delete('/usuarios/:id', (req, res) => {
     const userId = req.params.id;
 
-    connection.query('DELETE FROM Usuarios WHERE USERNAME = ?', userId, (error, results) => {
+    connection.query('DELETE FROM usuarios WHERE USERNAME = ?', userId, (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -77,7 +77,7 @@
 
   // Ruta para obtener datos de CLINICAS
   app.get('/clinicas', (req, res) => {
-    connection.query('SELECT * FROM CLINICAS', (error, results) => {
+    connection.query('SELECT * FROM clinicas', (error, results) => {
       if (error) throw error;
       res.json(results);
     });
@@ -86,7 +86,7 @@
   // Ruta para agregar datos a CLINICAS
   app.post('/clinicas', (req, res) => {
     const { NOMBRE, DIRECCION, EMAIL, TELEFONO, CAMPOS } = req.body;
-    connection.query('INSERT INTO CLINICAS (NOMBRE, DIRECCION, EMAIL, TELEFONO, CAMPOS) VALUES (?, ?, ?, ?, ?)', [NOMBRE, DIRECCION, EMAIL, TELEFONO, CAMPOS], (error, results) => {
+    connection.query('INSERT INTO clinicas (NOMBRE, DIRECCION, EMAIL, TELEFONO, CAMPOS) VALUES (?, ?, ?, ?, ?)', [NOMBRE, DIRECCION, EMAIL, TELEFONO, CAMPOS], (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -100,7 +100,7 @@
   app.delete('/clinicas/:id', (req, res) => {
     const clinicaId = req.params.id;
 
-    connection.query('DELETE FROM CLINICAS WHERE ID = ?', clinicaId, (error, results) => {
+    connection.query('DELETE FROM clinicas WHERE ID = ?', clinicaId, (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -114,7 +114,7 @@
 
   // Ruta para obtener datos de PACIENTES
   app.get('/pacientes', (req, res) => {
-    connection.query('SELECT * FROM PACIENTES', (error, results) => {
+    connection.query('SELECT * FROM pacientes', (error, results) => {
       if (error) throw error;
       res.json(results);
     });
@@ -123,7 +123,7 @@
   // Ruta para agregar datos a PACIENTES
   app.post('/pacientes', (req, res) => {
     const { DNI, NOMBRE, APELLIDO, PASSWORD, TELEFONO, EMAIL } = req.body;
-    connection.query('INSERT INTO PACIENTES (DNI, NOMBRE, APELLIDO, PASSWORD, TELEFONO, EMAIL) VALUES (?, ?, ?, ?, ?, ?)', [DNI, NOMBRE, APELLIDO, PASSWORD, TELEFONO, EMAIL], (error, results) => {
+    connection.query('INSERT INTO pacientes (DNI, NOMBRE, APELLIDO, PASSWORD, TELEFONO, EMAIL) VALUES (?, ?, ?, ?, ?, ?)', [DNI, NOMBRE, APELLIDO, PASSWORD, TELEFONO, EMAIL], (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -137,7 +137,7 @@
   app.delete('/pacientes/:id', (req, res) => {
     const pacienteId = req.params.id;
 
-    connection.query('DELETE FROM PACIENTES WHERE DNI = ?', pacienteId, (error, results) => {
+    connection.query('DELETE FROM pacientes WHERE DNI = ?', pacienteId, (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -152,11 +152,11 @@
   // Ruta para obtener datos de TURNOS
   app.get('/turnos', (req, res) => {
     connection.query('SELECT T.*, P.NOMBRE AS N_PACIENTE, P.APELLIDO AS AP_PACIENTE, '+
-      'PR.NOMBRE AS PROFESIONAL, CL.NOMBRE AS CLINICA, CA.NOMBRE AS CAMPO_DESC  FROM TURNOS T '+
-      'LEFT JOIN PACIENTES P ON P.DNI = T.FK_PACIENTES '+
-      'LEFT JOIN CLINICAS CL ON CL.ID = T.FK_CLINICAS '+
-      'LEFT JOIN USUARIOS PR ON PR.USERNAME = T.FK_PROFESIONAL '+
-      'LEFT JOIN CAMPOS CA ON CA.ID = T.CAMPO ', (error, results) => {
+      'PR.NOMBRE AS PROFESIONAL, CL.NOMBRE AS CLINICA, CA.NOMBRE AS CAMPO_DESC  FROM turnos T '+
+      'LEFT JOIN pacientes P ON P.DNI = T.FK_PACIENTES '+
+      'LEFT JOIN clinicas CL ON CL.ID = T.FK_CLINICAS '+
+      'LEFT JOIN usuarios PR ON PR.USERNAME = T.FK_PROFESIONAL '+
+      'LEFT JOIN campos CA ON CA.ID = T.CAMPO ', (error, results) => {
       if (error) throw error;
       res.json(results);
     });
@@ -165,7 +165,7 @@
   // Ruta para agregar datos a TURNOS
   app.post('/turnos', (req, res) => {
     const { FECHA, HORA, CAMPO, FK_CLINICAS, FK_PROFESIONAL, FK_PACIENTES } = req.body;
-    connection.query('INSERT INTO TURNOS (FECHA, HORA, CAMPO, FK_CLINICAS, FK_PROFESIONAL, FK_PACIENTES) VALUES (?, ?, ?, ?, ?, ?)', [FECHA, HORA, CAMPO, FK_CLINICAS, FK_PROFESIONAL, FK_PACIENTES], (error, results) => {
+    connection.query('INSERT INTO turnos (FECHA, HORA, CAMPO, FK_CLINICAS, FK_PROFESIONAL, FK_PACIENTES) VALUES (?, ?, ?, ?, ?, ?)', [FECHA, HORA, CAMPO, FK_CLINICAS, FK_PROFESIONAL, FK_PACIENTES], (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -179,7 +179,7 @@
   app.delete('/turnos/:id', (req, res) => {
     const turnoId = req.params.id;
 
-    connection.query('DELETE FROM TURNOS WHERE ID = ?', turnoId, (error, results) => {
+    connection.query('DELETE FROM turnos WHERE ID = ?', turnoId, (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -190,9 +190,9 @@
 
   //////////CAMPOS//////////
 
-  // Ruta para obtener datos de TURNOS
+  // Ruta para obtener datos de campos
   app.get('/campos', (req, res) => {
-    connection.query('SELECT * FROM CAMPOS', (error, results) => {
+    connection.query('SELECT * FROM campos', (error, results) => {
       if (error) throw error;
       res.json(results);
     });
@@ -201,7 +201,7 @@
   // Ruta para agregar datos a CAMPOS
   app.post('/campos', (req, res) => {
     const { NOMBRE } = req.body;
-    connection.query('INSERT INTO CAMPOS (NOMBRE) VALUES (?)', [NOMBRE], (error, results) => {
+    connection.query('INSERT INTO campos (NOMBRE) VALUES (?)', [NOMBRE], (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -215,7 +215,7 @@
   app.delete('/campos/:id', (req, res) => {
     const campoId = req.params.id;
 
-    connection.query('DELETE FROM CAMPOS WHERE ID = ?', campoId, (error, results) => {
+    connection.query('DELETE FROM campos WHERE ID = ?', campoId, (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -229,7 +229,7 @@
 
   // Ruta para obtener datos de TIPOS
   app.get('/tipos', (req, res) => {
-    connection.query('SELECT * FROM TIPOS', (error, results) => {
+    connection.query('SELECT * FROM tipos', (error, results) => {
       if (error) throw error;
       res.json(results);
     });
@@ -238,7 +238,7 @@
   // Ruta para agregar datos a TIPOS
   app.post('/tipos', (req, res) => {
     const { ID, DESCRIPCION } = req.body;
-    connection.query('INSERT INTO TIPOS (ID, DESCRIPCION) VALUES (?, ?)', [ID, DESCRIPCION], (error, results) => {
+    connection.query('INSERT INTO tipos (ID, DESCRIPCION) VALUES (?, ?)', [ID, DESCRIPCION], (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -252,7 +252,7 @@
   app.delete('/tipos/:id', (req, res) => {
     const tipoId = req.params.id;
 
-    connection.query('DELETE FROM TIPOS WHERE ID = ?', tipoId, (error, results) => {
+    connection.query('DELETE FROM tipos WHERE ID = ?', tipoId, (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -271,11 +271,11 @@
     const profId = req.params.id;
 
     connection.query('SELECT A.*, C.NOMBRE, C.DIRECCION, C.TELEFONO, P.NOMBRE AS N_PACIENTE, P.APELLIDO AS AP_PACIENTE,P.TELEFONO AS P_TELEFONO, P.DNI AS P_DNI, U.NOMBRE AS PROFESIONAL'+
-      ' FROM TURNOS A '+
-      'JOIN CLINICAS C ON C.ID = A.FK_CLINICAS '+
-      'JOIN PACIENTES P ON P.DNI = A.FK_PACIENTES '+
-      'JOIN USUARIOS U ON U.USERNAME = A.FK_PROFESIONAL '+
-      'WHERE FK_PROFESIONAL = ?', profId, (error, results) => {
+      ' FROM turnos A '+
+      'JOIN clinicas C ON C.ID = A.FK_CLINICAS '+
+      'JOIN pacientes P ON P.DNI = A.FK_PACIENTES '+
+      'JOIN usuarios U ON U.USERNAME = A.FK_PROFESIONAL '+
+      'WHERE A.FK_PROFESIONAL = ?', profId, (error, results) => {
       if (error) throw error;
       res.json(results);
     });
@@ -290,7 +290,7 @@
       return res.status(400).json({ error: 'Los campos turnoId y profId son requeridos' });
     }
 
-    const query = 'UPDATE TURNOS SET FK_PROFESIONAL = ? WHERE ID = ?';
+    const query = 'UPDATE turnos SET FK_PROFESIONAL = ? WHERE ID = ?';
 
     connection.query(query, [profId, turnoId], (error, results) => {
       if (error) {
@@ -306,7 +306,7 @@
   app.post('/turnos-prof/:id', (req, res) => {
     const turnoId = req.params.id;
 
-    connection.query('UPDATE TURNOS SET FK_PROFESIONAL = NULL WHERE ID = ?', turnoId, (error, results) => {
+    connection.query('UPDATE turnos SET FK_PROFESIONAL = NULL WHERE ID = ?', turnoId, (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -321,10 +321,10 @@
     const campoId = req.params.id;
 
     connection.query('SELECT A.*, C.NOMBRE, C.DIRECCION, C.TELEFONO, P.NOMBRE AS N_PACIENTE, P.APELLIDO AS AP_PACIENTE,P.TELEFONO AS P_TELEFONO, P.DNI AS P_DNI'+
-      ' FROM TURNOS A '+
-      'JOIN CLINICAS C ON C.ID = A.FK_CLINICAS '+
-      'JOIN PACIENTES P ON P.DNI = A.FK_PACIENTES '+
-      'WHERE FK_PROFESIONAL IS NULL and FK_CLINICAS IS NOT NULL and CAMPO = ?', campoId, (error, results) => {
+      ' FROM turnos A '+
+      'JOIN clinicas C ON C.ID = A.FK_CLINICAS '+
+      'JOIN pacientes P ON P.DNI = A.FK_PACIENTES '+
+      'WHERE A.FK_PROFESIONAL IS NULL and A.FK_CLINICAS IS NOT NULL and A.CAMPO = ?', campoId, (error, results) => {
       if (error) throw error;
       res.json(results);
     });
@@ -338,10 +338,10 @@
     const clinId = req.params.id;
 
     connection.query('SELECT A.*, C.NOMBRE, C.DIRECCION, C.TELEFONO, P.NOMBRE AS N_PACIENTE, P.APELLIDO AS AP_PACIENTE,P.TELEFONO AS P_TELEFONO, P.DNI AS P_DNI, U.NOMBRE AS PROFESIONAL'+
-      ' FROM TURNOS A '+
-      'LEFT JOIN CLINICAS C ON C.ID = A.FK_CLINICAS '+
-      'LEFT JOIN PACIENTES P ON P.DNI = A.FK_PACIENTES '+
-      'LEFT JOIN USUARIOS U ON U.USERNAME = A.FK_PROFESIONAL '+
+      ' FROM turnos A '+
+      'LEFT JOIN clinicas C ON C.ID = A.FK_CLINICAS '+
+      'LEFT JOIN pacientes P ON P.DNI = A.FK_PACIENTES '+
+      'LEFT JOIN usuarios U ON U.USERNAME = A.FK_PROFESIONAL '+
       'WHERE A.FK_CLINICAS = ?', clinId, (error, results) => {
       if (error) throw error;
       res.json(results);
@@ -357,7 +357,7 @@
       return res.status(400).json({ error: 'Los campos turnoId y clinId son requeridos' });
     }
 
-    const query = 'UPDATE TURNOS SET FK_CLINICAS = ? WHERE ID = ?';
+    const query = 'UPDATE turnos SET FK_CLINICAS = ? WHERE ID = ?';
 
     connection.query(query, [clinId, turnoId], (error, results) => {
       if (error) {
@@ -373,7 +373,7 @@
   app.post('/turnos-clin/:id', (req, res) => {
     const turnoId = req.params.id;
 
-    connection.query('UPDATE TURNOS SET FK_CLINICAS = NULL WHERE ID = ?', turnoId, (error, results) => {
+    connection.query('UPDATE turnos SET FK_CLINICAS = NULL WHERE ID = ?', turnoId, (error, results) => {
       if (error) {
         res.status(500).json({ error: 'Error al insertar los datos' });
       } else {
@@ -388,10 +388,10 @@
     const campoId = req.params.id;
 
     connection.query('SELECT A.*, C.NOMBRE, C.DIRECCION, C.TELEFONO, P.NOMBRE AS N_PACIENTE, P.APELLIDO AS AP_PACIENTE,P.TELEFONO AS P_TELEFONO, P.DNI AS P_DNI, CA.NOMBRE AS CAMPO_DESC'+
-      ' FROM TURNOS A '+
-      'LEFT JOIN CLINICAS C ON C.ID = A.FK_CLINICAS '+
-      'LEFT JOIN PACIENTES P ON P.DNI = A.FK_PACIENTES '+
-      'LEFT JOIN CAMPOS CA ON CA.ID = A.CAMPO '+
+      ' FROM turnos A '+
+      'LEFT JOIN clinicas C ON C.ID = A.FK_CLINICAS '+
+      'LEFT JOIN pacientes P ON P.DNI = A.FK_PACIENTES '+
+      'LEFT JOIN campos CA ON CA.ID = A.CAMPO '+
       'WHERE A.FK_CLINICAS IS NULL and A.CAMPO = ?', campoId, (error, results) => {
       if (error) throw error;
       res.json(results);
@@ -404,10 +404,10 @@
     const pacId = req.params.id;
 
     connection.query('SELECT A.*, C.NOMBRE, C.DIRECCION, C.TELEFONO, P.NOMBRE AS N_PACIENTE, P.APELLIDO AS AP_PACIENTE,P.TELEFONO AS P_TELEFONO, P.DNI AS P_DNI, U.NOMBRE AS PROFESIONAL'+
-      ' FROM TURNOS A '+
-      'LEFT JOIN CLINICAS C ON C.ID = A.FK_CLINICAS '+
-      'LEFT JOIN PACIENTES P ON P.DNI = A.FK_PACIENTES '+
-      'LEFT JOIN USUARIOS U ON U.USERNAME = A.FK_PROFESIONAL '+
+      ' FROM turnos A '+
+      'LEFT JOIN clinicas C ON C.ID = A.FK_CLINICAS '+
+      'LEFT JOIN pacientes P ON P.DNI = A.FK_PACIENTES '+
+      'LEFT JOIN usuarios U ON U.USERNAME = A.FK_PROFESIONAL '+
       'WHERE A.FK_PROFESIONAL IS NOT NULL AND A.FK_CLINICAS IS NOT NULL AND A.FK_PACIENTES = ?', pacId, (error, results) => {
       if (error) throw error;
       res.json(results);
