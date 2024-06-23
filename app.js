@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT, PORT } = require('./config.js');
