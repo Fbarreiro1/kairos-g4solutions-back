@@ -26,7 +26,7 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
   if (err) {
-    console.error('Error al conectarse a la base de datos: ' + err.stack);
+    console.error('Error al conectarse a la base de datos: ' + err.message);
     return;
   }
   console.log('conexion exitosa a base de datos tp_g4_db');
