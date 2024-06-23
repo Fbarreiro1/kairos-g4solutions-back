@@ -51,6 +51,7 @@ app.post('/usuarios', (req, res) => {
   connection.query('INSERT INTO USUARIOS (USERNAME,TIPO,TELEFONO,PASSWORD,NOMBRE,FK_CLINICAS,EMAIL,DNI,CAMPO,FK_PACIENTE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [USERNAME,TIPO,TELEFONO,PASSWORD,NOMBRE,FK_CLINICAS,EMAIL,DNI,CAMPO,FK_PACIENTE], (error, results) => {
     if (error) {
       res.status(500).json({ error: 'Error al insertar los datos' });
+      console.log(error);
     } else {
       res.status(200).json({ message: 'Datos insertados correctamente' });
     }
