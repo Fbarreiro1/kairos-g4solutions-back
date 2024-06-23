@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, PORT } = require('./config.js');
+const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT, PORT } = require('./config.js');
 
 const app = express();
 
@@ -19,7 +19,8 @@ const connection = mysql.createConnection({
   host: DB_HOST,
   user: DB_USER,
   password: DB_PASSWORD,
-  database: DB_NAME
+  database: DB_NAME,
+  port: DB_PORT
 });
 
 connection.connect((err) => {
