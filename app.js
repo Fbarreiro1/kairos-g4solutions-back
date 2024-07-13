@@ -33,6 +33,8 @@
 
 
   //////////USUARIOS//////////
+INSERT INTO usuarios (USERNAME, TIPO, TELEFONO, PASSWORD, NOMBRE, FK_CLINICAS, EMAIL, DNI, CAMPO, FK_PACIENTE)
+VALUES ('user', 'tipo_default', 'telefono_default', '123', 'nombre_default', 1, 'email_default@example.com', 'dni_default', 1, 1);
 
   // Ruta para obtener datos de USUARIOS
   app.get('/usuarios', (req, res) => {
