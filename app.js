@@ -33,8 +33,27 @@
 
 
   //////////USUARIOS//////////
-INSERT INTO usuarios (USERNAME, TIPO, TELEFONO, PASSWORD, NOMBRE, FK_CLINICAS, EMAIL, DNI, CAMPO, FK_PACIENTE)
-VALUES ('user', 'tipo_default', 'telefono_default', '123', 'nombre_default', 1, 'email_default@example.com', 'dni_default', 1, 1);
+const initialUser = {
+    USERNAME: 'user',
+    TIPO: 'tipo_default',
+    TELEFONO: 'telefono_default',
+    PASSWORD: '123',
+    NOMBRE: 'nombre_default',
+    FK_CLINICAS: 1,
+    EMAIL: 'email_default@example.com',
+    DNI: 'dni_default',
+    CAMPO: 1,
+    FK_PACIENTE: 1
+  };
+
+  connection.query('INSERT INTO usuarios SET ?', initialUser, (error, results) => {
+    if (error) {
+      console.error('Error al insertar usuario inicial:', error);
+    } else {
+      console.log('Usuario inicial insertado correctamente');
+    }
+  });
+});
 
   // Ruta para obtener datos de USUARIOS
   app.get('/usuarios', (req, res) => {
