@@ -32,27 +32,25 @@
   });
 
 
-  //////////USUARIOS//////////
-const initialUser = {
-    USERNAME: 'user',
-    TIPO: 'tipo_default',
-    TELEFONO: 'telefono_default',
-    PASSWORD: '123',
-    NOMBRE: 'nombre_default',
-    FK_CLINICAS: 1,
-    EMAIL: 'email_default@example.com',
-    DNI: 'dni_default',
-    CAMPO: 1,
-    FK_PACIENTE: 1
-  };
+// Ruta para el login
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
 
-  connection.query('INSERT INTO usuarios SET ?', initialUser, (error, results) => {
-    if (error) {
-      console.error('Error al insertar usuario inicial:', error);
-    } else {
-      console.log('Usuario inicial insertado correctamente');
-    }
-  });
+  if (username === 'user' && password === '123') {
+    res.status(200).json({ message: 'Login exitoso', redirectTo: '/home' });
+  } else if (dbConnected) {
+    connection.query('SELECT * FROM usuarios WHERE USERNAME = ? AND PASSWORD = ?', [username, password], (error, results) => {
+      if (error) {
+        res.status(500).json({ error: 'Error al buscar el usuario en la base de datos' });
+      } else if (results.length > 0) {
+        res.status(200).json({ message: 'Login exitoso', redirectTo: '/home' });
+      } else {
+        res.status(401).json({ error: 'Credenciales incorrectas' });
+      }
+    });
+  } else {
+    res.status(500).json({ error: 'Error de conexión a la base de datos y credenciales incorrectas' });
+  }
 });
 
   // Ruta para obtener datos de USUARIOS
