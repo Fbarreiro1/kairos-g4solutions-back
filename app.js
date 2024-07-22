@@ -178,12 +178,13 @@ app.post('/login', (req, res) => {
 
   // Ruta para obtener datos de TURNOS
   app.get('/turnos', (req, res) => {
-    connection.query('SELECT T.*, P.NOMBRE AS N_PACIENTE, P.APELLIDO AS AP_PACIENTE, '+
+    const sql = connection.query('SELECT T.*, P.NOMBRE AS N_PACIENTE, P.APELLIDO AS AP_PACIENTE, '+
       'PR.NOMBRE AS PROFESIONAL, CL.NOMBRE AS CLINICA, CA.NOMBRE AS CAMPO_DESC  FROM turnos T '+
       'LEFT JOIN pacientes P ON P.DNI = T.FK_PACIENTES '+
       'LEFT JOIN clinicas CL ON CL.ID = T.FK_CLINICAS '+
       'LEFT JOIN usuarios PR ON PR.USERNAME = T.FK_PROFESIONAL '+
       'LEFT JOIN campos CA ON CA.ID = T.CAMPO ', (error, results) => {
+        console.log('Consulta SQL:', sql);
         if (error){
           res.status(500).json({ error: 'Error al traer los datos' + error.message + error});
         } else {
